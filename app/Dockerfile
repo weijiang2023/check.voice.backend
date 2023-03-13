@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1.4
-FROM --platform=$BUILDPLATFORM python:3.9.6 AS builder
+#FROM --platform=$BUILDPLATFORM python:3.10-alpine AS builder
+FROM python:3.9.6
 
 WORKDIR /app
 
@@ -10,18 +11,19 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 COPY . /app
 
 ENTRYPOINT ["python3"]
-CMD ["app.py"]
+#CMD ["app.py"]
+CMD [ "python3", "-m", "flask", "run", "--host=0.0.0.0"]
 
-FROM builder as dev-envs
+#FROM builder as dev-envs
 
 #RUN <<EOF
 #apk update
 #apk add git
 #EOF
 
-RUN <<EOF
-addgroup -S docker
-adduser -S --shell /bin/bash --ingroup docker vscode
-EOF
+#RUN <<EOF
+#addgroup -S docker
+#adduser -S --shell /bin/bash --ingroup docker vscode
+#EOF
 # install Docker tools (cli, buildx, compose)
-COPY --from=gloursdocker/docker / /
+#COPY --from=gloursdocker/docker / /
