@@ -11,8 +11,8 @@ model = load_model('Fruits_Classification.h5')
 target_img = os.path.join(os.getcwd() , 'static/images')
 
 @app.route('/')
-def hello():
-	return "Hello World!"
+def index_view():
+	return render_template('index.html')
 
 # Allow files with extension png, jpg and jpeg
 ALLOWED_EXT = set(['jpg' , 'jpeg' , 'png'])
@@ -49,6 +49,6 @@ def predict():
 	else:
 		return "Unable to read the file. Please check file extension"
 	
-	
+
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=8000)
